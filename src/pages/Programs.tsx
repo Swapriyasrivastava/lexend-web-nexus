@@ -335,7 +335,7 @@ const FeaturesGrid = () => {
   );
 };
 
-// Key Outcomes Component
+// Key Outcomes and Modules Component
 const KeyOutcomesAndModules = () => {
   const modules = [
     {
