@@ -659,8 +659,8 @@ const Programs = () => {
         <div className="hidden lg:block w-[400px]"></div>
       </div>
 
-      {/* Fixed 6.5M+ Learners Box - Matching the image design */}
-      <div className="hidden lg:block fixed top-[300px] right-[40px] w-[400px] z-50 bg-white p-6 shadow-xl rounded-lg border border-gray-200">
+      {/* Fixed 6.5M+ Learners Box - Only visible from Key Outcomes section onwards */}
+      <div className="hidden lg:block fixed top-[200px] right-[40px] w-[400px] z-40 bg-white p-6 shadow-xl rounded-lg border border-gray-200">
         <h3 className="text-2xl font-bold mb-2">6.5M+ Learners</h3>
         <p className="text-gray-600 mb-4">have reaped benefits from our programs</p>
         
