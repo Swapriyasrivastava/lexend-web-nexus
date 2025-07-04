@@ -4,115 +4,526 @@ import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Badge } from "@/components/ui/badge";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ChevronDown, Download, ArrowDown } from "lucide-react";
+import { useState } from "react";
 
-const Programs = () => {
-  const programs = [
+// Navbar Component
+const Navbar = () => {
+  return (
+    <header className="bg-white border-b px-6 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
+            <span className="text-xl font-bold text-gray-900">Lexend</span>
+          </div>
+        </div>
+        <nav className="hidden md:flex items-center space-x-8">
+          <div className="relative">
+            <button className="flex items-center space-x-1 text-gray-700 hover:text-gray-900">
+              <span>Learn</span>
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </div>
+          <a href="#" className="text-gray-700 hover:text-gray-900">Upskill your Team</a>
+          <a href="#" className="text-gray-700 hover:text-gray-900">About</a>
+        </nav>
+        <div className="flex items-center space-x-4">
+          <Button variant="outline">Login</Button>
+          <Button className="bg-gray-900 hover:bg-gray-800 text-white">Apply as Mentor</Button>
+        </div>
+      </div>
+    </header>
+  );
+};
+
+// Hero Section Component
+const HeroSection = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    contact: "",
+    city: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  const handleDownload = () => {
+    setFormData({
+      name: "",
+      email: "",
+      contact: "",
+      city: "",
+    });
+    setSubmitted(false);
+    setShowForm(false);
+  };
+
+  return (
+    <section>
+      <div className="bg-white text-black pt-3 pb-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-[#0b2a25] rounded-3xl p-8 lg:p-12 shadow-lg">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10">
+              <div className="w-full lg:w-1/2">
+                <img
+                  src="https://d3kl8zsmmx4oop.cloudfront.net/MCP_39e7df7c6c_d9c653a440.webp"
+                  alt="Management Consulting"
+                  className="w-full h-auto rounded-2xl"
+                />
+              </div>
+
+              <div className="w-full lg:w-1/2 text-white">
+                <h1 className="text-3xl lg:text-4xl font-semibold mb-4">
+                  Management Consulting
+                </h1>
+                <p className="text-white/90 text-lg mb-6">
+                  A 15-week AI-powered mentorship program designed by consultants
+                  from McKinsey, Bain & more to help you understand, practice, and
+                  implement the principles of management consulting.
+                </p>
+
+                <div className="mb-6">
+                  <p className="text-white/70 text-sm mb-1">Cohort start date</p>
+                  <p className="text-lg font-semibold">Coming Soon</p>
+                </div>
+
+                <div className="flex flex-wrap gap-4">
+                  <button className="bg-[#2ecc71] text-white font-semibold py-3 px-6 rounded-md hover:opacity-90 transition">
+                    Apply Now
+                  </button>
+                  <button
+                    className="bg-[#f7f1e9] text-black font-semibold py-3 px-6 rounded-md flex items-center gap-2 hover:bg-[#e0d7cb] transition"
+                    onClick={() => setShowForm(true)}
+                  >
+                    <Download className="w-4 h-4" />
+                    Brochure
+                  </button>
+                </div>
+
+                {showForm && (
+                  <div className="bg-white text-black mt-6 p-6 rounded-xl shadow-lg animate-fade-in">
+                    {!submitted ? (
+                      <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium">Name</label>
+                          <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2ecc71]"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium">Email</label>
+                          <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2ecc71]"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium">Contact</label>
+                          <input
+                            type="text"
+                            name="contact"
+                            value={formData.contact}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2ecc71]"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium">City</label>
+                          <input
+                            type="text"
+                            name="city"
+                            value={formData.city}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2ecc71]"
+                          />
+                        </div>
+                        <button
+                          type="submit"
+                          className="bg-[#2ecc71] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#27ae60] transition"
+                        >
+                          Submit
+                        </button>
+                      </form>
+                    ) : (
+                      <div className="text-center">
+                        <p className="mb-4 font-medium text-green-600">Thank you for submitting!</p>
+                        <a
+                          href="/your-brochure.pdf"
+                          download
+                          onClick={handleDownload}
+                          className="bg-[#2ecc71] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#27ae60] transition inline-flex items-center gap-2"
+                        >
+                          <Download className="w-4 h-4" />
+                          Download Brochure
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.5s ease-out forwards;
+        }
+      `}</style>
+    </section>
+  );
+};
+
+// Features Grid Component
+const FeaturesGrid = () => {
+  const companies = [
+    "https://d3kl8zsmmx4oop.cloudfront.net/Group_77e1b17517.svg",
+    "https://d3kl8zsmmx4oop.cloudfront.net/Vector_1_3f59974b49.svg",
+    "https://d3kl8zsmmx4oop.cloudfront.net/Google_c2d8e527c7.svg",
+    "https://d3kl8zsmmx4oop.cloudfront.net/layer1_001742dcec.svg",
+    "https://d3kl8zsmmx4oop.cloudfront.net/LOGO_07fbe3c627.svg",
+    "https://d3kl8zsmmx4oop.cloudfront.net/Vector_8abe02abf9.svg"
+  ];
+
+  const [activeImage, setActiveImage] = useState<string | null>(null);
+
+  const handleImageClick = (src: string) => {
+    setActiveImage(src === activeImage ? null : src);
+  };
+
+  return (
+    <section className="py-6 px-6 bg-[#fffefd]">
+      <div className="max-w-7xl mx-auto grid grid-cols-4 gap-x-5 gap-y-1">
+        <div className="flex flex-col justify-between gap-3">
+          <Card className="bg-[#FFF8F0] border border-[#EAE6DF] rounded-xl shadow-sm h-full">
+            <CardContent className="p-5 text-left flex flex-col justify-between h-full">
+              <h3 className="text-lg font-bold text-[#0E1D34] mb-1">₹ 15,00,000+</h3>
+              <p className="text-[#555A66] uppercase text-xs">Average Annual CTC</p>
+              <img
+                src="https://d31bwppm8yl9g2.cloudfront.net/learner/website/rs.svg"
+                alt="Salary"
+                onClick={() => handleImageClick("https://d31bwppm8yl9g2.cloudfront.net/learner/website/rs.svg")}
+                className={`w-14 ml-auto cursor-pointer ${activeImage === "https://d31bwppm8yl9g2.cloudfront.net/learner/website/rs.svg" ? "filter-green" : ""}`}
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#FFF8F0] border border-[#EAE6DF] rounded-xl shadow-sm h-full">
+            <CardContent className="p-5 text-left flex flex-col justify-between h-full">
+              <h3 className="text-lg font-bold text-[#0E1D34] mb-1">Secret insights</h3>
+              <p className="text-[#555A66] uppercase text-xs">From real case-studies</p>
+              <img
+                src="https://d31bwppm8yl9g2.cloudfront.net/learner/website/pap.svg"
+                alt="Insights"
+                onClick={() => handleImageClick("https://d31bwppm8yl9g2.cloudfront.net/learner/website/pap.svg")}
+                className={`w-20 self-end mt-3 cursor-pointer ${activeImage === "https://d31bwppm8yl9g2.cloudfront.net/learner/website/pap.svg" ? "filter-green" : ""}`}
+              />
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="bg-[#FFF8F0] border border-[#EAE6DF] rounded-xl shadow-sm col-span-2 w-full flex items-center justify-center">
+          <CardContent className="p-4 text-center flex flex-col justify-center h-full w-full">
+            <h1 className="text-lg font-bold text-[#0E1D34] mb-1">
+              Top companies hiring in this industry
+            </h1>
+            <p className="text-[#555A66] text-xs mb-4 uppercase">
+              Get hired to work for these global giants
+            </p>
+            <div className="overflow-hidden space-y-3">
+              <div className="animate-scrollRight flex space-x-4 w-max">
+                {companies.concat(companies).map((logo, idx) => (
+                  <img
+                    key={`row1-${idx}`}
+                    src={logo}
+                    alt="Company Logo"
+                    className="h-5"
+                  />
+                ))}
+              </div>
+
+              <div className="animate-scrollLeft flex space-x-4 w-max">
+                {companies.concat(companies).map((logo, idx) => (
+                  <img
+                    key={`row2-${idx}`}
+                    src={logo}
+                    alt="Company Logo"
+                    className="h-4"
+                  />
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="flex flex-col justify-between gap-1">
+          <Card className="bg-[#FFF8F0] border border-[#EAE6DF] rounded-xl shadow-sm h-full">
+            <CardContent className="p-5 text-left flex flex-col justify-between h-full">
+              <h3 className="text-lg font-bold text-[#0E1D34] mb-1">Multiple projects</h3>
+              <p className="text-[#555A66] uppercase text-xs">Learn by doing</p>
+              <img
+                src="https://d31bwppm8yl9g2.cloudfront.net/learner/website/fold.svg"
+                alt="Projects"
+                onClick={() => handleImageClick("https://d31bwppm8yl9g2.cloudfront.net/learner/website/fold.svg")}
+                className={`w-20 ml-auto cursor-pointer ${activeImage === "https://d31bwppm8yl9g2.cloudfront.net/learner/website/fold.svg" ? "filter-green" : ""}`}
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#FFF8F0] border border-[#EAE6DF] rounded-xl shadow-sm h-full">
+            <CardContent className="p-5 text-left flex flex-col justify-between h-full">
+              <h3 className="text-lg font-bold text-[#0E1D34] mb-1">Live QnA sessions</h3>
+              <p className="text-[#555A66] uppercase text-xs">Talk with industry mentors</p>
+              <img
+                src="https://d31bwppm8yl9g2.cloudfront.net/learner/website/peop.svg"
+                alt="QnA"
+                onClick={() => handleImageClick("https://d31bwppm8yl9g2.cloudfront.net/learner/website/peop.svg")}
+                className={`w-20 ml-auto cursor-pointer ${activeImage === "https://d31bwppm8yl9g2.cloudfront.net/learner/website/peop.svg" ? "filter-green" : ""}`}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      <style>{`
+        .animate-scrollRight {
+          animation: scrollRight 25s linear infinite;
+        }
+        .animate-scrollLeft {
+          animation: scrollLeft 25s linear infinite;
+        }
+        @keyframes scrollRight {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @keyframes scrollLeft {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
+        }
+        .filter-green {
+          filter: brightness(0) saturate(100%) invert(52%) sepia(99%) saturate(415%) hue-rotate(72deg) brightness(96%) contrast(91%);
+        }
+      `}</style>
+    </section>
+  );
+};
+
+// Key Outcomes Component
+const KeyOutcomesAndModules = () => {
+  const modules = [
     {
-      title: "AI Fundamentals",
-      duration: "8 Weeks",
-      level: "Beginner",
-      description: "Learn the basics of artificial intelligence and machine learning",
-      topics: ["Introduction to AI", "Machine Learning Basics", "Data Analysis", "Practical Projects"],
-      price: "$299"
+      id: "module1",
+      title: "MODULE 1",
+      subtitle: "Introduction to Consulting",
+      description: "Gain insight into consulting careers, key skills, firm operations, industry trends, and pathways. Explore entry strategies, prominent firms, practice types, and a real-life case study."
     },
     {
-      title: "Advanced Automation",
-      duration: "12 Weeks",
-      level: "Intermediate",
-      description: "Master advanced automation techniques and implementation strategies",
-      topics: ["Process Design", "Integration Patterns", "Scalability", "Performance Optimization"],
-      price: "$599"
+      id: "module2",
+      title: "MODULE 2",
+      subtitle: "Business and Data 101",
+      description: "Master fundamental business concepts and data analysis techniques essential for consulting work."
     },
     {
-      title: "AI Leadership",
-      duration: "6 Weeks",
-      level: "Executive",
-      description: "Strategic AI implementation for business leaders and decision makers",
-      topics: ["AI Strategy", "Team Management", "ROI Analysis", "Change Management"],
-      price: "$899"
-    },
-    {
-      title: "Custom Enterprise",
-      duration: "Flexible",
-      level: "All Levels",
-      description: "Tailored training programs designed for your organization's specific needs",
-      topics: ["Custom Curriculum", "On-site Training", "Ongoing Support", "Certification"],
-      price: "Contact Us"
+      id: "module3",
+      title: "MODULE 3",
+      subtitle: "Key Consulting Concepts - Part 1",
+      description: "Deep dive into core consulting methodologies and frameworks used by top firms."
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-teal-800 to-teal-900 text-white">
-      <Navigation />
-      
-      <section className="pt-32 pb-20 px-4 md:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Training <span className="text-[#1AD1A5]">Programs</span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-              Advance your skills and knowledge with our comprehensive AI and automation training programs. 
-              From beginners to experts, we have the right program for you.
-            </p>
+    <div className="bg-white">
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-3xl">
+          <h2 className="text-3xl font-bold mb-8">Key Outcomes</h2>
+          <p className="text-lg text-gray-700 mb-8">
+            Gain a thorough understanding of the consulting industry, its diverse career trajectories,
+            necessary skills, and the inner workings of consulting firms. This knowledge will empower you to
+            make well-informed decisions about your potential engagement in this field.
+          </p>
+
+          <div className="space-y-4 mb-8">
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+              <p className="text-gray-700">Understand the role, functions, and daily activities of consultants</p>
+            </div>
+            <div className="flex items-start space-x-3">
+              <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+              <p className="text-gray-700">Explore diverse career paths and strategies to overcome entry barriers</p>
+            </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {programs.map((program, index) => (
-              <Card key={index} className="bg-white/10 border-[#1AD1A5]/20 hover:bg-white/15 transition-all duration-300">
-                <CardContent className="p-8">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-2xl font-bold text-[#1AD1A5]">{program.title}</h3>
-                    <span className="bg-[#1AD1A5]/20 text-[#1AD1A5] px-3 py-1 rounded-full text-sm">
-                      {program.level}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center gap-4 mb-4 text-gray-300">
-                    <span>📅 {program.duration}</span>
-                    <span>💰 {program.price}</span>
-                  </div>
-                  
-                  <p className="text-gray-300 mb-6">{program.description}</p>
-                  
-                  <div className="mb-6">
-                    <h4 className="text-white font-semibold mb-3">What You'll Learn:</h4>
-                    <ul className="space-y-2">
-                      {program.topics.map((topic, idx) => (
-                        <li key={idx} className="flex items-center text-gray-300">
-                          <span className="text-[#1AD1A5] mr-2">✓</span>
-                          {topic}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <Button className="w-full bg-[#1AD1A5] hover:bg-[#15b28e] text-black font-semibold">
-                    Enroll Now
-                  </Button>
+
+          <button className="text-blue-600 hover:text-blue-800 flex items-center space-x-2">
+            <span>Read More</span>
+            <ChevronDown className="w-4 h-4" />
+          </button>
+        </div>
+      </section>
+
+      <section className="py-16 px-6 bg-white">
+        <div className="max-w-3xl">
+          <h2 className="text-3xl font-bold mb-12">What will you learn?</h2>
+
+          <div className="space-y-4">
+            {modules.map((module) => (
+              <Card key={module.id} className="border border-gray-200 bg-white">
+                <CardContent className="p-0">
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value={module.id} className="border-none">
+                      <AccordionTrigger className="px-6 py-4 hover:no-underline">
+                        <div className="flex items-center justify-between w-full">
+                          <div className="text-left">
+                            <p className="text-sm text-gray-500 font-medium">{module.title}</p>
+                            <h3 className="text-lg font-semibold">{module.subtitle}</h3>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-6 pb-4">
+                        <p className="text-gray-700">{module.description}</p>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
                 </CardContent>
               </Card>
             ))}
           </div>
-          
-          <div className="text-center bg-white/5 rounded-lg p-12">
-            <h2 className="text-3xl font-bold mb-6">Need a Custom Program?</h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-              We can create a tailored training program that meets your organization's specific needs and objectives.
-            </p>
-            <Link to="/contact">
-              <Button 
-                size="lg" 
-                className="bg-[#1AD1A5] hover:bg-[#15b28e] text-black px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
-              >
-                Discuss Custom Program
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
-      
-      <Footer />
+    </div>
+  );
+};
+
+// Main Programs Component
+const Programs = () => {
+  return (
+    <div className="min-h-screen bg-white relative">
+      <Navbar />
+      <HeroSection />
+      <FeaturesGrid />
+
+      <div className="max-w-7xl mx-auto px-4 py-8 flex gap-4">
+        <div className="w-full lg:w-2/3">
+          <KeyOutcomesAndModules />
+        </div>
+        <div className="hidden lg:block w-[400px]"></div>
+      </div>
+
+      {/* Fixed 6.5M+ Learners Box - Matching the image design */}
+      <div className="hidden lg:block fixed top-[300px] right-[40px] w-[400px] z-50 bg-white p-6 shadow-xl rounded-lg border border-gray-200">
+        <h3 className="text-2xl font-bold mb-2">6.5M+ Learners</h3>
+        <p className="text-gray-600 mb-4">have reaped benefits from our programs</p>
+        
+        {/* Company Logos Grid - Matching image layout */}
+        <div className="grid grid-cols-6 gap-3 mb-6">
+          <div className="flex items-center justify-center p-2 bg-gray-50 rounded h-12">
+            <span className="text-blue-600 font-bold text-lg">G</span>
+          </div>
+          <div className="flex items-center justify-center p-2 bg-gray-50 rounded h-12">
+            <span className="text-blue-600 font-bold text-lg">F</span>
+          </div>
+          <div className="flex items-center justify-center p-2 bg-gray-50 rounded h-12">
+            <span className="text-blue-600 font-bold text-lg">W</span>
+          </div>
+          <div className="flex items-center justify-center p-2 bg-gray-50 rounded h-12">
+            <span className="text-purple-600 font-bold text-lg">P</span>
+          </div>
+          <div className="flex items-center justify-center p-2 bg-gray-50 rounded h-12">
+            <span className="text-blue-400 font-bold text-lg">V</span>
+          </div>
+          <div className="flex items-center justify-center p-2 bg-gray-50 rounded h-12">
+            <span className="text-orange-500 font-bold text-lg">S</span>
+          </div>
+        </div>
+
+        {/* Company Names */}
+        <div className="grid grid-cols-6 gap-3 text-xs text-gray-600 text-center mb-6">
+          <span>Google</span>
+          <span>Flipkart</span>
+          <span>Walmart</span>
+          <span>PhonePe</span>
+          <span>Vivo</span>
+          <span>ShareChat</span>
+        </div>
+
+        {/* Benefits with green checkmarks */}
+        <div className="space-y-3 mb-6">
+          <div className="flex items-start space-x-3">
+            <div className="w-5 h-5 bg-emerald-100 rounded-full flex items-center justify-center mt-0.5">
+              <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+            </div>
+            <p className="text-sm text-gray-700">Stay ahead in your field by mastering industry relevant skills through our online sessions</p>
+          </div>
+          <div className="flex items-start space-x-3">
+            <div className="w-5 h-5 bg-emerald-100 rounded-full flex items-center justify-center mt-0.5">
+              <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+            </div>
+            <p className="text-sm text-gray-700">Dive into real challenges from today's businesses, gaining hands-on experience</p>
+          </div>
+          <div className="flex items-start space-x-3">
+            <div className="w-5 h-5 bg-emerald-100 rounded-full flex items-center justify-center mt-0.5">
+              <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
+            </div>
+            <p className="text-sm text-gray-700">Tap into a wealth of career opportunities through our established network</p>
+          </div>
+        </div>
+
+        {/* LinkedIn badge */}
+        <div className="flex items-center space-x-3">
+          <div className="w-8 h-8 bg-yellow-400 rounded flex items-center justify-center">
+            <span className="text-white font-bold text-sm">⚡</span>
+          </div>
+          <div>
+            <span className="text-sm font-medium text-blue-600">LinkedIn</span>
+            <p className="text-xs text-gray-500">Top Startup India 2023</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky CTA */}
+      <div className="fixed bottom-0 left-0 right-0 bg-[#f7f1e8] text-black border-t border-slate-700 p-4 z-50">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div>
+            <h3 className="font-semibold text-lg">Management Consulting - Elite</h3>
+            <a href="#" className="text-[#0c2218] hover:text-blue-500 underline text-sm">Looking for your team?</a>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">Apply Now</Button>
+            <Button variant="outline" className="border-gray-400 text-black hover:bg-white hover:text-gray-900">
+              <ArrowDown className="w-4 h-4 mr-2" /> Brochure
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-20"></div>
     </div>
   );
 };
